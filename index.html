@@ -113,11 +113,11 @@ footer{color:var(--muted);font-size:12px}
   <header>
     <div class="eyebrow">YOGA LIVE · 2026年11月</div>
     <h1>11月のヨガライブ予定</h1>
-    <p class="sub">予定をタップすると配信ページが開きます。予約中のライブ配信 12本（YouTube 9本・Vimeo 3本、11/13〜11/28）。時刻はすべて日本時間です。</p>
+    <p class="sub">予定をタップすると配信ページが開きます。予約中のライブ配信 18本（YouTube 9本・Vimeo 9本、11/13〜11/30）。時刻はすべて日本時間です。</p>
     <div class="legend">
       <span><i class="dot morning"></i>朝（9〜10時）</span>
       <span><i class="dot day"></i>昼（14時）</span>
-      <span><i class="dot night"></i>夜（21時）</span>
+      <span><i class="dot night"></i>夜（20〜21時）</span>
       <span><b class="pf yt">YT</b>YouTube</span>
       <span><b class="pf vm">VM</b>Vimeo</span>
     </div>
@@ -141,15 +141,21 @@ const events=[
   {d:13,time:"21:00",name:"安眠ヨガ",desc:"足腰から全身を温めるヨガ",url:"https://www.youtube.com/live/tk4uGGhcwRg"},
   {d:14,time:"14:00",name:"タイ式ヨガ",url:"https://www.youtube.com/live/3LKKQaz7i1g"},
   {d:15,time:"9:00",name:"椅子ヨガ",pf:"vm",url:"https://vimeo.com/event/6353667/52169bd97d"},
+  {d:16,time:"9:00",name:"骨盤底筋ヨガ",pf:"vm",url:"https://vimeo.com/event/6353762/30b49bacbe"},
   {d:17,time:"9:00",name:"整えヨガ",url:"https://www.youtube.com/live/siGVCeYS0ew"},
   {d:18,time:"14:00",name:"ペルヴィスワーク",pf:"vm",url:"https://vimeo.com/event/6323586/c7a9149217"},
+  {d:19,time:"9:00",name:"季節のヨガ",pf:"vm",url:"https://vimeo.com/event/6353750/fc3d049603"},
   {d:20,time:"21:00",name:"夜ヨガ",desc:"足腰から全身を温めるヨガ",url:"https://www.youtube.com/live/rfR-JCHvLS4"},
   {d:21,time:"14:00",name:"タイ式ヨガ",url:"https://www.youtube.com/live/9JiSYKTQrRE"},
+  {d:22,time:"9:00",name:"姿勢矯正ヨガ",pf:"vm",url:"https://vimeo.com/event/6353748/fefabf8bd7"},
   {d:23,time:"21:00",name:"おやすみヨガ",desc:"呼吸を深め、血流を良くして、ぐっすり眠れる状態へ",url:"https://www.youtube.com/live/lbfpCY5eUe4"},
   {d:24,time:"10:00",name:"脱力系顔ヨガ® みさお",url:"https://www.youtube.com/live/8HCDpKMfI1Q"},
   {d:25,time:"14:00",name:"首肩ストレッチ",pf:"vm",url:"https://vimeo.com/event/6323589/aaa54bb4b7"},
+  {d:26,time:"9:00",name:"季節のヨガ",pf:"vm",url:"https://vimeo.com/event/6353754/d31f822c89"},
   {d:27,time:"21:00",name:"安眠ヨガ",url:"https://www.youtube.com/live/hr8TMlf19EM"},
-  {d:28,time:"21:00",name:"ピラティス ヨガ えりこ",url:"https://www.youtube.com/live/_m7WDr2MgTM"}
+  {d:28,time:"21:00",name:"ピラティス ヨガ えりこ",url:"https://www.youtube.com/live/_m7WDr2MgTM"},
+  {d:29,time:"9:00",name:"姿勢矯正ヨガ",pf:"vm",url:"https://vimeo.com/event/6353751/9e3520bc11"},
+  {d:30,time:"20:00",name:"リラックスヨガ",pf:"vm",url:"https://vimeo.com/event/6353765/6337040d0a"}
 ];
 const pfLabel=p=>p==='vm'?'<b class="pf vm">VM</b>':'<b class="pf yt">YT</b>';
 const slot=t=>{const h=parseInt(t);return h<12?"morning":h<18?"day":"night"};
