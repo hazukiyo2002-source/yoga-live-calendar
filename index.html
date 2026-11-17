@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>11月 ヨガライブ予定</title>
+<meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap">
 <style>
 /* Layout: 月間グリッド（PC）＋ 日付順リスト（スマホでも読める） */
@@ -34,8 +31,7 @@
   --morning:#80cfd1; --morning-soft:#1d3536;
   --warn:#f0a07a; --warn-soft:#3d261b;
   --sun:#ef8f86; --sat:#8fb2ec; color-scheme:dark}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);line-height:1.6}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);line-height:1.6}
 .wrap{max-width:1040px;margin:0 auto;padding-block:32px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:28px}
 header{display:grid;gap:6px}
 .eyebrow{font-size:12px;letter-spacing:.12em;color:var(--accent);font-weight:700}
@@ -70,6 +66,8 @@ h1{font-family:var(--display);font-size:clamp(26px,4vw,36px);margin:0;text-wrap:
 .watch{justify-self:start;font-size:13px;font-weight:700;color:var(--accent);text-decoration:none;margin-top:2px}
 .watch:hover{text-decoration:underline}
 .ev.flag{outline:1.5px dashed var(--warn);outline-offset:-1.5px}
+.ev.past{opacity:.78}
+.arc{font-size:10px;font-weight:700;color:var(--muted);background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:0 5px;line-height:1.4}
 
 h2{font-family:var(--display);font-size:20px;margin:0}
 .list{display:grid;gap:10px}
@@ -80,6 +78,7 @@ h2{font-family:var(--display);font-size:20px;margin:0}
 .date .tm{font-weight:700;font-size:14px;margin-top:4px}
 .night .tm{color:var(--night)} .day .tm{color:var(--day)} .morning .tm{color:var(--morning)}
 .info{display:grid;gap:4px;min-width:0}
+.info .tags{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
 .info strong{font-size:15px}
 .info p{margin:0;color:var(--muted);font-size:13px}
 .chip{justify-self:start;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--warn-soft);color:var(--warn)}
@@ -100,20 +99,19 @@ footer{color:var(--muted);font-size:12px}
   .ev .t{font-size:9.5px}
   .ev .row{gap:3px}
   .ev .pf{font-size:8px;padding:0 3px}
+  .ev .arc{display:none}
   .item{grid-template-columns:64px minmax(0,1fr)}
 }
 @media (max-width:420px){
   .ev .name{font-size:9.5px}
 }
 </style>
-</head>
-<body>
 
 <div class="wrap">
   <header>
     <div class="eyebrow">YOGA LIVE · 2026年11月</div>
     <h1>11月のヨガライブ予定</h1>
-    <p class="sub">予定をタップすると配信ページが開きます。</p>
+    <p class="sub">予定をタップすると配信ページが開きます。終わった回はアーカイブで見られます。</p>
     <div class="legend">
       <span><i class="dot morning"></i>朝（9〜10時）</span>
       <span><i class="dot day"></i>昼（14時）</span>
@@ -133,36 +131,47 @@ footer{color:var(--muted);font-size:12px}
     <div id="list" class="list"></div>
   </section>
 
-  <footer>YouTube Studio・Vimeo の予約情報（11/13 時点）をもとに作成。</footer>
+  <footer>YouTube Studio・Vimeo の予約情報とアーカイブ（11/17 時点）をもとに作成。</footer>
 </div>
 
 <script>
 const events=[
+  {d:2,time:"9:00",name:"ストレッチヨガ",pf:"vm",url:"https://vimeo.com/event/6326018/embed/0300c4ee94"},
+  {d:4,time:"14:00",name:"ペルヴィスワーク",pf:"vm",url:"https://vimeo.com/event/6323584/embed/641f08840e"},
+  {d:5,time:"9:00",name:"ヨガティス",pf:"vm",url:"https://vimeo.com/event/6335004/embed/26f89cff93"},
+  {d:7,time:"9:00",name:"姿勢矯正ヨガ",pf:"vm",url:"https://vimeo.com/event/6339101/embed/7e74d4f139"},
+  {d:9,time:"9:00",name:"ストレッチヨガ",pf:"vm",url:"https://vimeo.com/event/6342360/embed/e765712672"},
+  {d:10,time:"10:00",name:"脱力系顔ヨガ® みさお",desc:"お顔の映る鏡をご用意ください",url:"https://www.youtube.com/live/K88c3HSqZoQ"},
+  {d:11,time:"14:00",name:"筋膜 整顔&デコルテ",pf:"vm",url:"https://vimeo.com/event/6323587/embed/83d0b1b301"},
+  {d:12,time:"9:00",name:"季節のヨガ",pf:"vm",url:"https://vimeo.com/event/6350524/embed/263a65b1f6"},
   {d:13,time:"21:00",name:"安眠ヨガ",desc:"足腰から全身を温めるヨガ",url:"https://www.youtube.com/live/tk4uGGhcwRg"},
   {d:14,time:"14:00",name:"タイ式ヨガ",url:"https://www.youtube.com/live/3LKKQaz7i1g"},
-  {d:15,time:"9:00",name:"椅子ヨガ",pf:"vm",url:"https://vimeo.com/event/6353667/52169bd97d"},
-  {d:16,time:"9:00",name:"骨盤底筋ヨガ",pf:"vm",url:"https://vimeo.com/event/6353762/30b49bacbe"},
+  {d:15,time:"9:00",name:"椅子ヨガ",pf:"vm",url:"https://vimeo.com/event/6353667/embed/52169bd97d"},
+  {d:16,time:"9:00",name:"骨盤底筋ヨガ",pf:"vm",url:"https://vimeo.com/event/6353762/embed/30b49bacbe"},
   {d:17,time:"9:00",name:"整えヨガ",url:"https://www.youtube.com/live/siGVCeYS0ew"},
-  {d:18,time:"14:00",name:"ペルヴィスワーク",pf:"vm",url:"https://vimeo.com/event/6323586/c7a9149217"},
-  {d:19,time:"9:00",name:"季節のヨガ",pf:"vm",url:"https://vimeo.com/event/6353750/fc3d049603"},
+  {d:18,time:"14:00",name:"ペルヴィスワーク",pf:"vm",url:"https://vimeo.com/event/6323586/embed/c7a9149217"},
+  {d:19,time:"9:00",name:"季節のヨガ",pf:"vm",url:"https://vimeo.com/event/6353750/embed/fc3d049603"},
   {d:20,time:"21:00",name:"夜ヨガ",desc:"足腰から全身を温めるヨガ",url:"https://www.youtube.com/live/rfR-JCHvLS4"},
   {d:21,time:"14:00",name:"タイ式ヨガ",url:"https://www.youtube.com/live/9JiSYKTQrRE"},
-  {d:22,time:"9:00",name:"姿勢矯正ヨガ",pf:"vm",url:"https://vimeo.com/event/6353748/fefabf8bd7"},
+  {d:22,time:"9:00",name:"姿勢矯正ヨガ",pf:"vm",url:"https://vimeo.com/event/6353748/embed/fefabf8bd7"},
   {d:23,time:"21:00",name:"おやすみヨガ",desc:"呼吸を深め、血流を良くして、ぐっすり眠れる状態へ",url:"https://www.youtube.com/live/lbfpCY5eUe4"},
   {d:24,time:"10:00",name:"脱力系顔ヨガ® みさお",url:"https://www.youtube.com/live/8HCDpKMfI1Q"},
-  {d:25,time:"14:00",name:"首肩ストレッチ",pf:"vm",url:"https://vimeo.com/event/6323589/aaa54bb4b7"},
-  {d:26,time:"9:00",name:"季節のヨガ",pf:"vm",url:"https://vimeo.com/event/6353754/d31f822c89"},
+  {d:25,time:"14:00",name:"首肩ストレッチ",pf:"vm",url:"https://vimeo.com/event/6323589/embed/aaa54bb4b7"},
+  {d:26,time:"9:00",name:"季節のヨガ",pf:"vm",url:"https://vimeo.com/event/6353754/embed/d31f822c89"},
   {d:27,time:"21:00",name:"安眠ヨガ",url:"https://www.youtube.com/live/hr8TMlf19EM"},
   {d:28,time:"21:00",name:"ピラティス ヨガ えりこ",url:"https://www.youtube.com/live/_m7WDr2MgTM"},
-  {d:29,time:"9:00",name:"姿勢矯正ヨガ",pf:"vm",url:"https://vimeo.com/event/6353751/9e3520bc11"},
-  {d:30,time:"20:00",name:"リラックスヨガ",pf:"vm",url:"https://vimeo.com/event/6353765/6337040d0a"}
+  {d:29,time:"9:00",name:"姿勢矯正ヨガ",pf:"vm",url:"https://vimeo.com/event/6353751/embed/9e3520bc11"},
+  {d:30,time:"20:00",name:"リラックスヨガ",pf:"vm",url:"https://vimeo.com/event/6353765/embed/6337040d0a"}
 ];
 const pfLabel=p=>p==='vm'?'<b class="pf vm">VM</b>':'<b class="pf yt">YT</b>';
 const slot=t=>{const h=parseInt(t);return h<12?"morning":h<18?"day":"night"};
 const dows=["日","月","火","水","木","金","土"];
 const holidays={3:"文化の日",23:"勤労感謝の日"};
 const first=new Date(2026,10,1).getDay(), days=30;
-const now=new Date(); const todayD=(now.getFullYear()===2026&&now.getMonth()===10)?now.getDate():-1;
+const now=new Date();
+const isPast=e=>{const [h,m]=e.time.split(':').map(Number);return new Date(2026,10,e.d,h,m+90)<now};
+const todayD=(now.getFullYear()===2026&&now.getMonth()===10)?now.getDate():-1;
+const arcTag='<span class="arc">アーカイブ</span>';
 const grid=document.getElementById('grid');
 const total=Math.ceil((first+days)/7)*7;
 for(let i=0;i<total;i++){
@@ -173,23 +182,26 @@ for(let i=0;i<total;i++){
   if(d===todayD)c.classList.add('today');
   c.innerHTML=`<div class="num"><span class="n">${d}</span>${holidays[d]?`<span class="holname">${holidays[d]}</span>`:''}</div>`;
   events.filter(e=>e.d===d).forEach(e=>{
+    const past=isPast(e);
     const ev=document.createElement('a');
     ev.href=e.url; ev.target='_blank'; ev.rel='noopener';
-    ev.className='ev '+slot(e.time)+(e.flag?' flag':'');
-    ev.innerHTML=`<span class="row"><span class="t">${e.time}</span>${pfLabel(e.pf)}</span><span class="name">${e.name}</span>`;
+    ev.className='ev '+slot(e.time)+(e.flag?' flag':'')+(past?' past':'');
+    ev.innerHTML=`<span class="row"><span class="t">${e.time}</span>${pfLabel(e.pf)}${past?arcTag:''}</span><span class="name">${e.name}</span>`;
     c.appendChild(ev);
   });
   grid.appendChild(c);
 }
 const list=document.getElementById('list');
 events.forEach(e=>{
+  const past=isPast(e);
   const w=dows[new Date(2026,10,e.d).getDay()];
   const el=document.createElement('div');
   el.className='item '+slot(e.time);
+  const where=e.pf==='vm'?'Vimeo':'YouTube';
   el.innerHTML=`<div class="date"><b>11/${e.d}</b><small>${w}${holidays[e.d]?'・祝':''}</small><span class="tm">${e.time}</span></div>
-  <div class="info">${pfLabel(e.pf)}<strong>${e.name}</strong>${e.desc?`<p>${e.desc}</p>`:''}<a class="watch" href="${e.url}" target="_blank" rel="noopener">${e.pf==='vm'?'Vimeo':'YouTube'}で見る →</a>${e.flag?`<span class="chip">要確認：${e.flag}</span>`:''}</div>`;
+  <div class="info"><span class="tags">${pfLabel(e.pf)}${past?arcTag:''}</span><strong>${e.name}</strong>${e.desc?`<p>${e.desc}</p>`:''}<a class="watch" href="${e.url}" target="_blank" rel="noopener">${past?where+'でアーカイブを見る':where+'で見る'} →</a>${e.flag?`<span class="chip">要確認：${e.flag}</span>`:''}</div>`;
   list.appendChild(el);
 });
 </script>
-</body>
-</html>
+
+</body></html>
