@@ -11,7 +11,7 @@
   --day:#b0773a; --day-soft:#f6ebdc;
   --morning:#3f8a8c; --morning-soft:#dff0ef;
   --warn:#a3532d; --warn-soft:#fbeae0;
-  --sun:#b5524a; --sat:#3f6aa6;
+  --sun:#b5524a; --sat:#3f6aa6; --cancel:#d0021b;
   --display:"Zen Maru Gothic","Hiragino Maru Gothic ProN",system-ui,sans-serif;
   --body:"Noto Sans JP","Hiragino Sans",system-ui,sans-serif;
 }
@@ -22,7 +22,7 @@
   --day:#e2ad73; --day-soft:#3a2d1d;
   --morning:#80cfd1; --morning-soft:#1d3536;
   --warn:#f0a07a; --warn-soft:#3d261b;
-  --sun:#ef8f86; --sat:#8fb2ec; color-scheme:dark}}
+  --sun:#ef8f86; --sat:#8fb2ec; --cancel:#ff6b6b; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#161a18; --surface:#1f2421; --fg:#e7ebe7; --muted:#9aa49b; --line:#323a35;
   --accent:#8fc2a6; --accent-soft:#25352c;
@@ -30,7 +30,7 @@
   --day:#e2ad73; --day-soft:#3a2d1d;
   --morning:#80cfd1; --morning-soft:#1d3536;
   --warn:#f0a07a; --warn-soft:#3d261b;
-  --sun:#ef8f86; --sat:#8fb2ec; color-scheme:dark}
+  --sun:#ef8f86; --sat:#8fb2ec; --cancel:#ff6b6b; color-scheme:dark}
 body{background:var(--bg);color:var(--fg);font-family:var(--body);line-height:1.6}
 .wrap{max-width:1040px;margin:0 auto;padding-block:32px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:28px}
 header{display:grid;gap:6px}
@@ -68,6 +68,8 @@ h1{font-family:var(--display);font-size:clamp(26px,4vw,36px);margin:0;text-wrap:
 .ev.flag{outline:1.5px dashed var(--warn);outline-offset:-1.5px}
 .ev.past{opacity:.78}
 .arc{font-size:10px;font-weight:700;color:var(--muted);background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:0 5px;line-height:1.4}
+.off{color:var(--cancel);font-weight:700}
+.ev .off{font-size:11px}
 
 h2{font-family:var(--display);font-size:20px;margin:0}
 .list{display:grid;gap:10px}
@@ -104,6 +106,7 @@ footer{color:var(--muted);font-size:12px}
   .ev .row{gap:3px}
   .ev .pf{font-size:8px;padding:0 3px}
   .ev .arc{display:none}
+  .ev .off{font-size:10px}
   .item{grid-template-columns:64px minmax(0,1fr)}
 }
 @media (max-width:420px){
@@ -168,7 +171,7 @@ const events=[
   {d:15,time:"9:00",name:"椅子ヨガ",pf:"vm",url:"https://vimeo.com/1246549487/18d67dacc0"},
   {d:16,time:"9:00",name:"骨盤底筋ヨガ",pf:"vm",url:"https://vimeo.com/1246560784/0477b8c995"},
   {d:17,time:"9:00",name:"整えヨガ",url:"https://www.youtube.com/live/siGVCeYS0ew"},
-  {d:18,time:"14:00",name:"ペルヴィスワーク",pf:"vm",url:"https://vimeo.com/event/6323586/embed/c7a9149217"},
+  {d:18,time:"14:00",name:"ペルヴィスワーク",pf:"vm",off:true,url:"https://vimeo.com/event/6323586/embed/c7a9149217"},
   {d:19,time:"9:00",name:"季節のヨガ",pf:"vm",url:"https://vimeo.com/event/6353750/embed/fc3d049603"},
   {d:20,time:"21:00",name:"夜ヨガ",desc:"足腰から全身を温めるヨガ",url:"https://www.youtube.com/live/rfR-JCHvLS4"},
   {d:21,time:"14:00",name:"タイ式ヨガ",url:"https://www.youtube.com/live/9JiSYKTQrRE"},
@@ -191,6 +194,7 @@ const now=new Date();
 const isPast=e=>{const [h,m]=e.time.split(':').map(Number);return new Date(2026,10,e.d,h,m+90)<now};
 const todayD=(now.getFullYear()===2026&&now.getMonth()===10)?now.getDate():-1;
 const arcTag='<span class="arc">アーカイブ</span>';
+const offTag='<span class="off">休講</span>';
 const grid=document.getElementById('grid');
 const total=Math.ceil((first+days)/7)*7;
 for(let i=0;i<total;i++){
@@ -201,24 +205,24 @@ for(let i=0;i<total;i++){
   if(d===todayD)c.classList.add('today');
   c.innerHTML=`<div class="num"><span class="n">${d}</span>${holidays[d]?`<span class="holname">${holidays[d]}</span>`:''}</div>`;
   events.filter(e=>e.d===d).forEach(e=>{
-    const past=isPast(e);
+    const past=isPast(e)&&!e.off;
     const ev=document.createElement('a');
     ev.href=e.url; ev.target='_blank'; ev.rel='noopener';
     ev.className='ev '+slot(e.time)+(e.flag?' flag':'')+(past?' past':'');
-    ev.innerHTML=`<span class="row"><span class="t">${e.time}</span>${pfLabel(e.pf)}${past?arcTag:''}</span><span class="name">${e.name}</span>`;
+    ev.innerHTML=`<span class="row"><span class="t">${e.time}</span>${pfLabel(e.pf)}${past?arcTag:''}</span><span class="name">${e.name}</span>${e.off?offTag:''}`;
     c.appendChild(ev);
   });
   grid.appendChild(c);
 }
 const list=document.getElementById('list');
 events.forEach(e=>{
-  const past=isPast(e);
+  const past=isPast(e)&&!e.off;
   const w=dows[new Date(2026,10,e.d).getDay()];
   const el=document.createElement('div');
   el.className='item '+slot(e.time);
   const where=e.pf==='vm'?'Vimeo':'YouTube';
   el.innerHTML=`<div class="date"><b>11/${e.d}</b><small>${w}${holidays[e.d]?'・祝':''}</small><span class="tm">${e.time}</span></div>
-  <div class="info"><span class="tags">${pfLabel(e.pf)}${past?arcTag:''}</span><strong>${e.name}</strong>${e.desc?`<p>${e.desc}</p>`:''}<a class="watch" href="${e.url}" target="_blank" rel="noopener">${past?where+'でアーカイブを見る':where+'で見る'} →</a>${e.flag?`<span class="chip">要確認：${e.flag}</span>`:''}</div>`;
+  <div class="info"><span class="tags">${pfLabel(e.pf)}${past?arcTag:''}</span><strong>${e.name}${e.off?' '+offTag:''}</strong>${e.desc?`<p>${e.desc}</p>`:''}${e.off?'':`<a class="watch" href="${e.url}" target="_blank" rel="noopener">${past?where+'でアーカイブを見る':where+'で見る'} →</a>`}${e.flag?`<span class="chip">要確認：${e.flag}</span>`:''}</div>`;
   list.appendChild(el);
 });
 </script>
