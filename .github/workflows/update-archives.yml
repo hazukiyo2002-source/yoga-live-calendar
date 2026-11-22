@@ -1,0 +1,32 @@
+name: アーカイブURLの自動更新
+
+on:
+  schedule:
+    # 日本時間 12:00 / 17:00 / 23:30 に実行（UTC で指定）
+    - cron: '0 3 * * *'
+    - cron: '0 8 * * *'
+    - cron: '30 14 * * *'
+  workflow_dispatch: # Actions 画面から手動でも実行できる
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: 終わった回をアーカイブURLに差し替え
+        env:
+          VIMEO_TOKEN: ${{ secrets.VIMEO_TOKEN }}
+        run: node scripts/update-archives.mjs
+      - name: 変更があれば反映
+        run: |
+          if git diff --quiet; then echo "変更なし"; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git commit -am "アーカイブURLを自動更新"
+          git push
