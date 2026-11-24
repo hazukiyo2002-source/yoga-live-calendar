@@ -89,6 +89,12 @@ h2{font-family:var(--display);font-size:20px;margin:0}
 .info p{margin:0;color:var(--muted);font-size:13px}
 .chip{justify-self:start;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--warn-soft);color:var(--warn)}
 .note{background:var(--warn-soft);color:var(--fg);border-radius:12px;padding:12px 16px;font-size:13px}
+.inapp{background:var(--warn-soft);border:1px solid var(--warn);border-radius:12px;padding:14px 16px;display:grid;gap:8px;font-size:14px}
+.inapp[hidden]{display:none}
+.inapp b{color:var(--warn)}
+.inapp p{margin:0}
+.inapp .open{justify-self:start;background:var(--warn);color:var(--surface);font-weight:700;text-decoration:none;border-radius:999px;padding:8px 16px;font-size:14px}
+.inapp .open[hidden]{display:none}
 .note b{color:var(--warn)}
 footer{color:var(--muted);font-size:12px}
 .pf{justify-self:start;font-size:10px;font-weight:700;letter-spacing:.04em;padding:1px 6px;border-radius:4px;border:1px solid currentColor;line-height:1.4}
@@ -129,6 +135,12 @@ footer{color:var(--muted);font-size:12px}
       <span><b class="pf vm">VM</b>Vimeo</span>
     </div>
   </header>
+  <div class="inapp" id="inapp" hidden>
+    <p><b>動画がくるくる回って再生されないときは</b></p>
+    <p>InstagramやLINEのアプリ内では動画が再生できないことがあります。SafariやChromeで開き直してください。</p>
+    <a class="open" id="openExt" href="#">ブラウザで開く</a>
+    <p id="inappHow" style="font-size:12px;color:var(--muted)">ボタンで開けないときは、右上の「…」から「外部ブラウザで開く」を選んでください。</p>
+  </div>
 
   <section class="cal" aria-label="11月の月間カレンダー">
     <div class="dow"><div class="su">日</div><div>月</div><div>火</div><div>水</div><div>木</div><div>金</div><div class="sa">土</div></div>
@@ -144,6 +156,15 @@ footer{color:var(--muted);font-size:12px}
 </div>
 
 <script>
+(()=>{const ua=navigator.userAgent;
+  if(!/Instagram|FBAN|FBAV|FB_IAB|Line\//i.test(ua))return;
+  const box=document.getElementById('inapp'),btn=document.getElementById('openExt');
+  const page=location.href.replace(/^https?:\/\//,'');
+  if(/Android/i.test(ua)){btn.href='intent://'+page+'#Intent;scheme=https;package=com.android.chrome;end';btn.textContent='Chromeで開く'}
+  else if(/iPhone|iPad|iPod/i.test(ua)){btn.href='x-safari-https://'+page;btn.textContent='Safariで開く'}
+  else btn.hidden=true;
+  box.hidden=false;
+})();
 const events=[
   {d:2,time:"9:00",name:"ストレッチヨガ",pf:"vm",url:"https://vimeo.com/1242147428/ace6ffc49e"},
   {d:4,time:"14:00",name:"ペルヴィスワーク",pf:"vm",url:"https://vimeo.com/1241941942/d1c31904d4"},
